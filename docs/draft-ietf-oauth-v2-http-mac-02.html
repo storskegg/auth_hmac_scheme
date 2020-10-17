@@ -1,0 +1,1138 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+    <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+    <title>OAuth 2.0 Message Authentication Code (MAC) Tokens</title>
+
+    <style type="text/css" title="Xml2Rfc (sans serif)">
+        /*<![CDATA[*/
+        a {
+            text-decoration: none;
+        }
+        a.smpl {
+            color: black;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        a:active {
+            text-decoration: underline;
+        }
+        address {
+            margin-top: 1em;
+            margin-left: 2em;
+            font-style: normal;
+        }
+        body {
+            color: black;
+            font-family: verdana, helvetica, arial, sans-serif;
+            font-size: 10pt;
+
+        }
+        cite {
+            font-style: normal;
+        }
+        dd {
+            margin-right: 2em;
+        }
+        dl {
+            margin-left: 2em;
+        }
+
+        ul.empty {
+            list-style-type: none;
+        }
+        ul.empty li {
+            margin-top: .5em;
+        }
+        dl p {
+            margin-left: 0em;
+        }
+        dt {
+            margin-top: .5em;
+        }
+        h1 {
+            font-size: 14pt;
+            line-height: 21pt;
+            page-break-after: avoid;
+        }
+        h1.np {
+            page-break-before: always;
+        }
+        h1 a {
+            color: #333333;
+        }
+        h2 {
+            font-size: 12pt;
+            line-height: 15pt;
+            page-break-after: avoid;
+        }
+        h3, h4, h5, h6 {
+            font-size: 10pt;
+            page-break-after: avoid;
+        }
+        h2 a, h3 a, h4 a, h5 a, h6 a {
+            color: black;
+        }
+        img {
+            margin-left: 3em;
+        }
+        li {
+            margin-left: 2em;
+            margin-right: 2em;
+        }
+        ol {
+            margin-left: 2em;
+            margin-right: 2em;
+        }
+        ol p {
+            margin-left: 0em;
+        }
+        p {
+            margin-left: 2em;
+            margin-right: 2em;
+        }
+        pre {
+            margin-left: 3em;
+            background-color: lightyellow;
+            padding: .25em;
+        }
+        pre.text2 {
+            border-style: dotted;
+            border-width: 1px;
+            background-color: #f0f0f0;
+            width: 69em;
+        }
+        pre.inline {
+            background-color: white;
+            padding: 0em;
+        }
+        pre.text {
+            border-style: dotted;
+            border-width: 1px;
+            background-color: #f8f8f8;
+            width: 69em;
+        }
+        pre.drawing {
+            border-style: solid;
+            border-width: 1px;
+            background-color: #f8f8f8;
+            padding: 2em;
+        }
+        table {
+            margin-left: 2em;
+        }
+        table.tt {
+            vertical-align: top;
+        }
+        table.full {
+            border-style: outset;
+            border-width: 1px;
+        }
+        table.headers {
+            border-style: outset;
+            border-width: 1px;
+        }
+        table.tt td {
+            vertical-align: top;
+        }
+        table.full td {
+            border-style: inset;
+            border-width: 1px;
+        }
+        table.tt th {
+            vertical-align: top;
+        }
+        table.full th {
+            border-style: inset;
+            border-width: 1px;
+        }
+        table.headers th {
+            border-style: none none inset none;
+            border-width: 1px;
+        }
+        table.left {
+            margin-right: auto;
+        }
+        table.right {
+            margin-left: auto;
+        }
+        table.center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        caption {
+            caption-side: bottom;
+            font-weight: bold;
+            font-size: 9pt;
+            margin-top: .5em;
+        }
+
+        table.header {
+            border-spacing: 1px;
+            width: 95%;
+            font-size: 10pt;
+            color: white;
+        }
+        td.top {
+            vertical-align: top;
+        }
+        td.topnowrap {
+            vertical-align: top;
+            white-space: nowrap;
+        }
+        table.header td {
+            background-color: gray;
+            width: 50%;
+        }
+        table.header a {
+            color: white;
+        }
+        td.reference {
+            vertical-align: top;
+            white-space: nowrap;
+            padding-right: 1em;
+        }
+        thead {
+            display:table-header-group;
+        }
+        ul.toc, ul.toc ul {
+            list-style: none;
+            margin-left: 1.5em;
+            margin-right: 0em;
+            padding-left: 0em;
+        }
+        ul.toc li {
+            line-height: 150%;
+            font-weight: bold;
+            font-size: 10pt;
+            margin-left: 0em;
+            margin-right: 0em;
+        }
+        ul.toc li li {
+            line-height: normal;
+            font-weight: normal;
+            font-size: 9pt;
+            margin-left: 0em;
+            margin-right: 0em;
+        }
+        li.excluded {
+            font-size: 0pt;
+        }
+        ul p {
+            margin-left: 0em;
+        }
+
+        .comment {
+            background-color: yellow;
+        }
+        .center {
+            text-align: center;
+        }
+        .error {
+            color: red;
+            font-style: italic;
+            font-weight: bold;
+        }
+        .figure {
+            font-weight: bold;
+            text-align: center;
+            font-size: 9pt;
+        }
+        .filename {
+            color: #333333;
+            font-weight: bold;
+            font-size: 12pt;
+            line-height: 21pt;
+            text-align: center;
+        }
+        .fn {
+            font-weight: bold;
+        }
+        .hidden {
+            display: none;
+        }
+        .left {
+            text-align: left;
+        }
+        .right {
+            text-align: right;
+        }
+        .title {
+            color: #990000;
+            font-size: 18pt;
+            line-height: 18pt;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 36pt;
+        }
+        .vcardline {
+            display: block;
+        }
+        .warning {
+            font-size: 14pt;
+            background-color: yellow;
+        }
+
+
+        @media print {
+            .noprint {
+                display: none;
+            }
+
+            a {
+                color: black;
+                text-decoration: none;
+            }
+
+            table.header {
+                width: 90%;
+            }
+
+            td.header {
+                width: 50%;
+                color: black;
+                background-color: white;
+                vertical-align: top;
+                font-size: 12pt;
+            }
+
+            ul.toc a::after {
+                content: leader('.') target-counter(attr(href), page);
+            }
+
+            ul.ind li li a {
+                content: target-counter(attr(href), page);
+            }
+
+            .print2col {
+                column-count: 2;
+                -moz-column-count: 2;
+                column-fill: auto;
+            }
+        }
+
+        @page {
+            @top-left {
+                content: "Internet-Draft";
+            }
+            @top-right {
+                content: "December 2010";
+            }
+            @top-center {
+                content: "Abbreviated Title";3
+            }
+            @bottom-left {
+                content: "Doe";
+            }
+            @bottom-center {
+                content: "Expires June 2011";
+            }
+            @bottom-right {
+                content: "[Page " counter(page) "]";
+            }
+        }
+
+        @page:first {
+            @top-left {
+                content: normal;
+            }
+            @top-right {
+                content: normal;
+            }
+            @top-center {
+                content: normal;
+            }
+        }
+        /*]]>*/
+    </style>
+
+    <link href="#rfc.toc" rel="Contents"/>
+    <link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
+    <link href="#rfc.section.1.1" rel="Chapter" title="1.1 Example"/>
+    <link href="#rfc.section.1.2" rel="Chapter" title="1.2 Notational Conventions"/>
+    <link href="#rfc.section.2" rel="Chapter" title="2 Issuing MAC Credentials"/>
+    <link href="#rfc.section.3" rel="Chapter" title="3 Making Requests"/>
+    <link href="#rfc.section.3.1" rel="Chapter" title="3.1 The &quot;Authorization&quot; Request Header"/>
+    <link href="#rfc.section.3.2" rel="Chapter" title="3.2 Request MAC"/>
+    <link href="#rfc.section.3.2.1" rel="Chapter" title="3.2.1 Normalized Request String"/>
+    <link href="#rfc.section.3.2.2" rel="Chapter" title="3.2.2 hmac-sha-1"/>
+    <link href="#rfc.section.3.2.3" rel="Chapter" title="3.2.3 hmac-sha-256"/>
+    <link href="#rfc.section.4" rel="Chapter" title="4 Verifying Requests"/>
+    <link href="#rfc.section.4.1" rel="Chapter" title="4.1 Timestamp Verification"/>
+    <link href="#rfc.section.4.2" rel="Chapter" title="4.2 The &quot;WWW-Authenticate&quot; Response Header Field"/>
+    <link href="#rfc.section.5" rel="Chapter" title="5 Use with OAuth 2.0"/>
+    <link href="#rfc.section.5.1" rel="Chapter" title="5.1 Issuing MAC-Type Access Tokens"/>
+    <link href="#rfc.section.6" rel="Chapter" title="6 Security Considerations"/>
+    <link href="#rfc.section.6.1" rel="Chapter" title="6.1 MAC Keys Transmission"/>
+    <link href="#rfc.section.6.2" rel="Chapter" title="6.2 Confidentiality of Requests"/>
+    <link href="#rfc.section.6.3" rel="Chapter" title="6.3 Spoofing by Counterfeit Servers"/>
+    <link href="#rfc.section.6.4" rel="Chapter" title="6.4 Plaintext Storage of Credentials"/>
+    <link href="#rfc.section.6.5" rel="Chapter" title="6.5 Entropy of MAC Keys"/>
+    <link href="#rfc.section.6.6" rel="Chapter" title="6.6 Denial of Service / Resource Exhaustion Attacks"/>
+    <link href="#rfc.section.6.7" rel="Chapter" title="6.7 Timing Attacks"/>
+    <link href="#rfc.section.6.8" rel="Chapter" title="6.8 CSRF Attacks"/>
+    <link href="#rfc.section.6.9" rel="Chapter" title="6.9 Coverage Limitations"/>
+    <link href="#rfc.section.7" rel="Chapter" title="7 IANA Considerations"/>
+    <link href="#rfc.section.7.1" rel="Chapter" title="7.1 The HTTP MAC Authentication Scheme Algorithm Registry"/>
+    <link href="#rfc.section.7.1.1" rel="Chapter" title="7.1.1 Registration Template"/>
+    <link href="#rfc.section.7.1.2" rel="Chapter" title="7.1.2 Initial Registry Contents"/>
+    <link href="#rfc.section.7.2" rel="Chapter" title="7.2 OAuth Access Token Type Registration"/>
+    <link href="#rfc.section.7.2.1" rel="Chapter" title="7.2.1 The &quot;mac&quot; OAuth Access Token Type"/>
+    <link href="#rfc.section.7.3" rel="Chapter" title="7.3 OAuth Parameters Registration"/>
+    <link href="#rfc.section.7.3.1" rel="Chapter" title="7.3.1 The &quot;mac_key&quot; OAuth Parameter"/>
+    <link href="#rfc.section.7.3.2" rel="Chapter" title="7.3.2 The &quot;mac_algorithm&quot; OAuth Parameter"/>
+    <link href="#rfc.section.8" rel="Chapter" title="8 Contributors"/>
+    <link href="#rfc.section.9" rel="Chapter" title="9 Acknowledgments"/>
+    <link href="#rfc.references" rel="Chapter" title="10 References"/>
+    <link href="#rfc.references.1" rel="Chapter" title="10.1 Normative References"/>
+    <link href="#rfc.references.2" rel="Chapter" title="10.2 Informative References"/>
+    <link href="#rfc.authors" rel="Chapter"/>
+
+
+    <meta name="generator" content="xml2rfc version 2.3.9.1 - http://tools.ietf.org/tools/xml2rfc" />
+    <meta name="viewport" content="width=600;" />
+    <meta name="viewport" content="width=600;" />
+    <meta name="viewport" content="width=600;" />
+    <meta name="viewport" content="width=600;" />
+    <meta name="viewport" content="width=600;" />
+    <meta name="viewport" content="width=600;" />
+    <meta name="viewport" content="width=600;" />
+    <meta name="viewport" content="width=600;" />
+    <meta name="viewport" content="width=600;" />
+    <meta name="viewport" content="width=600;" />
+    <link rel="schema.dct" href="http://purl.org/dc/terms/" />
+
+    <meta name="dct.creator" content="Richer, J., Ed., Mills, W., Ed., and H. Tschofenig, Ed." />
+    <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-oauth-v2-http-mac-02" />
+    <meta name="dct.issued" scheme="ISO8601" content="2012-11-28" />
+    <meta name="dct.abstract" content="This document specifies the HTTP MAC access authentication scheme, an HTTP authentication method using a message authentication code (MAC) algorithm to provide cryptographic verification of portions of HTTP requests. The document also defines an OAuth 2.0 binding for use as an access token type.  " />
+    <meta name="description" content="This document specifies the HTTP MAC access authentication scheme, an HTTP authentication method using a message authentication code (MAC) algorithm to provide cryptographic verification of portions of HTTP requests. The document also defines an OAuth 2.0 binding for use as an access token type.  " />
+
+</head>
+
+<body>
+
+<table class="header">
+    <tbody>
+
+    <tr>
+        <td class="left">OAuth</td>
+        <td class="right">J. Richer, Ed.</td>
+    </tr>
+    <tr>
+        <td class="left">Internet-Draft</td>
+        <td class="right">The MITRE Corporation</td>
+    </tr>
+    <tr>
+        <td class="left">Intended status: Standards Track</td>
+        <td class="right">W. Mills, Ed.</td>
+    </tr>
+    <tr>
+        <td class="left">Expires: June 01, 2013</td>
+        <td class="right">Yahoo! Inc.</td>
+    </tr>
+    <tr>
+        <td class="left"></td>
+        <td class="right">H. Tschofenig, Ed.</td>
+    </tr>
+    <tr>
+        <td class="left"></td>
+        <td class="right">Nokia Siemens Networks</td>
+    </tr>
+    <tr>
+        <td class="left"></td>
+        <td class="right">November 28, 2012</td>
+    </tr>
+
+
+    </tbody>
+</table>
+
+<p class="title">OAuth 2.0 Message Authentication Code (MAC) Tokens<br />
+    <span class="filename">draft-ietf-oauth-v2-http-mac-02</span></p>
+
+<h1 id="rfc.abstract">
+    <a href="#rfc.abstract">Abstract</a>
+</h1>
+<p>This document specifies the HTTP MAC access authentication scheme, an HTTP authentication method using a message authentication code (MAC) algorithm to provide cryptographic verification of portions of HTTP requests. The document also defines an OAuth 2.0 binding for use as an access token type.  </p>
+<p>NOTE: This document (and other OAuth 2.0 security documents, such as <a href="#I-D.tschofenig-oauth-hotk">[I-D.tschofenig-oauth-hotk]</a>) are still work in progress in the OAuth working group.  As such, the content of this document may change. For a discussion about security requirements please consult <a href="#I-D.tschofenig-oauth-security">[I-D.tschofenig-oauth-security]</a>. Your input on the detailed security requirements is highly appreciated.  </p>
+<h1 id="rfc.status">
+    <a href="#rfc.status">Status of This Memo</a>
+</h1>
+<p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
+<p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet- Drafts is at http:/&amp;#8288;/&amp;#8288;datatracker.ietf.org/&amp;#8288;drafts/&amp;#8288;current/&amp;#8288;.</p>
+<p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
+<p>This Internet-Draft will expire on June 01, 2013.</p>
+<h1 id="rfc.copyrightnotice">
+    <a href="#rfc.copyrightnotice">Copyright Notice</a>
+</h1>
+<p>Copyright (c) 2012 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http:/&amp;#8288;/&amp;#8288;trustee.ietf.org/&amp;#8288;license-&amp;#8288;info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
+
+
+<hr class="noprint" />
+<h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+<ul class="toc">
+
+    <li>1.   <a href="#rfc.section.1">Introduction</a></li>
+    <li>1.1.   <a href="#rfc.section.1.1">Example</a></li>
+    <li>1.2.   <a href="#rfc.section.1.2">Notational Conventions</a></li>
+    <li>2.   <a href="#rfc.section.2">Issuing MAC Credentials</a></li>
+    <li>3.   <a href="#rfc.section.3">Making Requests</a></li>
+    <li>3.1.   <a href="#rfc.section.3.1">The "Authorization" Request Header</a></li>
+    <li>3.2.   <a href="#rfc.section.3.2">Request MAC</a></li>
+    <li>3.2.1.   <a href="#rfc.section.3.2.1">Normalized Request String</a></li>
+    <li>3.2.2.   <a href="#rfc.section.3.2.2">hmac-sha-1</a></li>
+    <li>3.2.3.   <a href="#rfc.section.3.2.3">hmac-sha-256</a></li>
+    <li>4.   <a href="#rfc.section.4">Verifying Requests</a></li>
+    <li>4.1.   <a href="#rfc.section.4.1">Timestamp Verification</a></li>
+    <li>4.2.   <a href="#rfc.section.4.2">The "WWW-Authenticate" Response Header Field</a></li>
+    <li>5.   <a href="#rfc.section.5">Use with OAuth 2.0</a></li>
+    <li>5.1.   <a href="#rfc.section.5.1">Issuing MAC-Type Access Tokens</a></li>
+    <li>6.   <a href="#rfc.section.6">Security Considerations</a></li>
+    <li>6.1.   <a href="#rfc.section.6.1">MAC Keys Transmission</a></li>
+    <li>6.2.   <a href="#rfc.section.6.2">Confidentiality of Requests</a></li>
+    <li>6.3.   <a href="#rfc.section.6.3">Spoofing by Counterfeit Servers</a></li>
+    <li>6.4.   <a href="#rfc.section.6.4">Plaintext Storage of Credentials</a></li>
+    <li>6.5.   <a href="#rfc.section.6.5">Entropy of MAC Keys</a></li>
+    <li>6.6.   <a href="#rfc.section.6.6">Denial of Service / Resource Exhaustion Attacks</a></li>
+    <li>6.7.   <a href="#rfc.section.6.7">Timing Attacks</a></li>
+    <li>6.8.   <a href="#rfc.section.6.8">CSRF Attacks</a></li>
+    <li>6.9.   <a href="#rfc.section.6.9">Coverage Limitations</a></li>
+    <li>7.   <a href="#rfc.section.7">IANA Considerations</a></li>
+    <li>7.1.   <a href="#rfc.section.7.1">The HTTP MAC Authentication Scheme Algorithm Registry</a></li>
+    <li>7.1.1.   <a href="#rfc.section.7.1.1">Registration Template</a></li>
+    <li>7.1.2.   <a href="#rfc.section.7.1.2">Initial Registry Contents</a></li>
+    <li>7.2.   <a href="#rfc.section.7.2">OAuth Access Token Type Registration</a></li>
+    <li>7.2.1.   <a href="#rfc.section.7.2.1">The "mac" OAuth Access Token Type</a></li>
+    <li>7.3.   <a href="#rfc.section.7.3">OAuth Parameters Registration</a></li>
+    <li>7.3.1.   <a href="#rfc.section.7.3.1">The "mac_key" OAuth Parameter</a></li>
+    <li>7.3.2.   <a href="#rfc.section.7.3.2">The "mac_algorithm" OAuth Parameter</a></li>
+    <li>8.   <a href="#rfc.section.8">Contributors</a></li>
+    <li>9.   <a href="#rfc.section.9">Acknowledgments</a></li>
+    <li>10.   <a href="#rfc.references">References</a></li>
+    <li>10.1.   <a href="#rfc.references.1">Normative References</a></li>
+    <li>10.2.   <a href="#rfc.references.2">Informative References</a></li>
+    <li><a href="#rfc.authors">Authors' Addresses</a></li>
+
+
+</ul>
+
+<h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> Introduction</h1>
+<p id="rfc.section.1.p.1">This specification defines the HTTP MAC access authentication scheme, providing a method for making authenticated HTTP requests with partial cryptographic verification of the request, covering the HTTP method, request URI, and host.  </p>
+<p id="rfc.section.1.p.2">Similar to the HTTP Basic access authentication scheme <a href="#RFC2617">[RFC2617]</a>, the MAC scheme utilizes a set of client credentials which include an identifier and key. However, in contrast with the Basic scheme, the key is never included in authenticated requests but is used to calculate the request MAC value which is included instead.  </p>
+<p id="rfc.section.1.p.3">The MAC scheme requires the establishment of a shared symmetric key between the client and the server. This specification offers one such method for issuing a set of MAC credentials to the client using OAuth 2.0 in the form of a MAC-type access token.  </p>
+<p id="rfc.section.1.p.4">The primary design goal of this mechanism is to simplify and improve HTTP authentication for services that are unwilling or unable to employ TLS for every request. In particular, this mechanism leverage an initial TLS setup phase to establish a shared secret between the client and the server. The shared secret is then used over an insecure channel to provide protection against a passive network attacker.  </p>
+<p id="rfc.section.1.p.5">In particular, when a server uses this mechanism, a passive network attacker will be unable to "steal" the user's session token, as is possible today with cookies and other bearer tokens. In addition, this mechanism helps secure the session token against leakage when sent over a secure channel to the wrong server. For example, when the client uses some form of dynamic configuration to determine where to send an authenticated request, or when the client fails to properly validate the server's identity as part of its TLS handshake.  </p>
+<p id="rfc.section.1.p.6">Unlike the HTTP Digest authentication scheme, this mechanism does not require interacting with the server to prevent replay attacks. Instead, the client provides both a nonce and a timestamp, which the server can use to prevent replay attacks using a bounded amount of storage. Also unlike Digest, this mechanism is not intended to protect the user's password itself because the client and server both have access to the key material in the clear. Instead, servers should issue a short-lived derivative credential for this mechanism during the initial TLS setup phase.  </p>
+<h1 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> Example</h1>
+<p id="rfc.section.1.1.p.1">The client attempts to access a protected resource without authentication, making the following HTTP request to the resource server: </p>
+<pre>
+
+  GET /resource/1?b=1&amp;a=2 HTTP/1.1
+  Host: example.com
+
+          </pre>
+<p id="rfc.section.1.1.p.2">The resource server returns the following authentication challenge: </p>
+<pre>
+
+  HTTP/1.1 401 Unauthorized
+  WWW-Authenticate: MAC
+
+          </pre>
+<p id="rfc.section.1.1.p.3">The client has previously obtained a set of MAC credentials for accessing resources on the <samp>http://example.com/</samp> server. The MAC credentials issued to the client include the following attributes: </p>
+<p/>
+
+<dl>
+    <dt>MAC key identifier:</dt>
+    <dd style="margin-left: 6">h480djs93hd8</dd>
+    <dt>MAC key:</dt>
+    <dd style="margin-left: 6">489dks293j39</dd>
+    <dt>MAC algorithm:</dt>
+    <dd style="margin-left: 6">hmac-sha-1</dd>
+</dl>
+
+<p> </p>
+<p id="rfc.section.1.1.p.5">The client constructs the authentication header by calculating a timestamp (e.g. the number of seconds since January 1, 1970 00:00:00 GMT) and generating a random string used as a nonce: </p>
+<p/>
+
+<dl>
+    <dt>Timestamp:</dt>
+    <dd style="margin-left: 6">1336363200</dd>
+    <dt>Nonce:</dt>
+    <dd style="margin-left: 6">dj83hs9s</dd>
+</dl>
+
+<p> </p>
+<p id="rfc.section.1.1.p.7">The client constructs the normalized request string (the new line separator character is represented by <samp>\n</samp> for display purposes only; the trailing new line separator signify that no extension value is included with the request, explained below): </p>
+<pre>
+
+  1336363200\n
+  dj83hs9s\n
+  GET\n
+  /resource/1?b=1&amp;a=2\n
+  example.com\n
+  80\n
+  \n
+
+          </pre>
+<p id="rfc.section.1.1.p.8">The request MAC is calculated using the specified MAC algorithm <samp>hmac-sha-1</samp> and the MAC key over the normalized request string. The result is base64-encoded to produce the request MAC: </p>
+<pre>
+
+  bhCQXTVyfj5cmA9uKkPFx1zeOXM=
+
+          </pre>
+<p id="rfc.section.1.1.p.9">The client includes the MAC key identifier, nonce, and request MAC with the request using the <samp>Authorization</samp> request header field: </p>
+<pre>
+
+  GET /resource/1?b=1&amp;a=2 HTTP/1.1
+  Host: example.com
+  Authorization: MAC id="h480djs93hd8",
+                     ts="1336363200",
+                     nonce="dj83hs9s",
+                     mac="bhCQXTVyfj5cmA9uKkPFx1zeOXM="
+
+          </pre>
+<p id="rfc.section.1.1.p.10">The server validates the request by calculating the request MAC again based on the request received and verifies the validity and scope of the MAC credentials. If valid, the server responds with the requested resource representation.  </p>
+<h1 id="rfc.section.1.2"><a href="#rfc.section.1.2">1.2.</a> Notational Conventions</h1>
+<p id="rfc.section.1.2.p.1">The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY', and 'OPTIONAL' in this specification are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>.  </p>
+<p id="rfc.section.1.2.p.2">This specification uses the Augmented Backus-Naur Form (ABNF) notation of <a href="#I-D.ietf-httpbis-p1-messaging">[I-D.ietf-httpbis-p1-messaging]</a>. Additionally, the following rules are included from [RFC2617]: auth-param.  </p>
+<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#issue" id="issue">Issuing MAC Credentials</a></h1>
+<p id="rfc.section.2.p.1">This specification provides one method for issuing MAC credentials using OAuth 2.0 as described in <a href="#oauth2">Section 5</a>. This specification does not mandate servers to support any particular method for issuing MAC credentials, and other methods MAY be defined and used. Whenever MAC credentials are issued, the credentials MUST include the following attributes: </p>
+<p/>
+
+<dl>
+    <dt>MAC key identifier</dt>
+    <dd style="margin-left: 6"><br/> A string identifying the MAC key used to calculate the request MAC. The string is usually opaque to the client. The server typically assigns a specific scope and lifetime to each set of MAC credentials. The identifier MAY denote a unique value used to retrieve the authorization information (e.g. from a database), or self-contain the authorization information in a verifiable manner (i.e. a string consisting of some data and a signature).  </dd>
+    <dt>MAC key</dt>
+    <dd style="margin-left: 6"><br/> A shared symmetric secret used as the MAC algorithm key. The server MUST NOT reissue a previously issued MAC key and MAC key identifier combination.  </dd>
+    <dt>MAC algorithm</dt>
+    <dd style="margin-left: 6"><br/> A MAC algorithm used to calculate the request MAC. Value MUST be one of <samp>hmac-sha-1</samp>, <samp>hmac-sha-256</samp>, or a registered extension algorithm name as described in <a href="#registry">Section 7.1</a>.  Algorithm names are case-sensitive. If the MAC algorithm is not understood by the client, the client MUST NOT use the MAC credentials and continue as if no MAC credentials were issued.  </dd>
+</dl>
+
+<p> </p>
+<p>The MAC key identifier, MAC key, MAC algorithm strings MUST NOT include characters other than: </p>
+<pre>
+
+  %x20-21 / %x23-5B / %x5D-7E
+  ; Any printable ASCII character except for &lt;"&gt; and &lt;\&gt;
+
+        </pre>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#requests" id="requests">Making Requests</a></h1>
+<p id="rfc.section.3.p.1">To make authenticated requests, the client must be in the possession of a valid set of MAC credentials accepted by the server. The client constructs the request by calculating a set of attributes, and adding them to the HTTP request using the <samp>Authorization</samp> request header field as described in <a href="#authz_header">Section 3.1</a>.  </p>
+<h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#authz_header" id="authz_header">The "Authorization" Request Header</a></h1>
+<p id="rfc.section.3.1.p.1">The <samp>Authorization</samp> request header field uses the framework defined by <a href="#RFC2617">[RFC2617]</a> as follows: </p>
+<pre>
+
+  credentials    = "MAC" 1*SP #params
+
+  params         = id / ts / nonce / ext / mac
+
+  id             = "id" "=" string-value
+  ts             = "ts" "=" ( &lt;"&gt; timestamp &lt;"&gt; ) / timestamp
+  nonce          = "nonce" "=" string-value
+  ext            = "ext" "=" string-value
+  mac            = "mac" "=" string-value
+
+  timestamp      = 1*DIGIT
+  string-value   = ( &lt;"&gt; plain-string &lt;"&gt; ) / plain-string
+  plain-string   = 1*( %x20-21 / %x23-5B / %x5D-7E )
+
+          </pre>
+<p id="rfc.section.3.1.p.2">The header attributes are set as follows: </p>
+<p/>
+
+<dl>
+    <dt>id</dt>
+    <dd style="margin-left: 6"><br/> REQUIRED. The MAC key identifier.  </dd>
+    <dt>ts</dt>
+    <dd style="margin-left: 6"><br/> REQUIRED. The request timestamp. The value MUST be a positive integer set by the client when making each request to the number of seconds elapsed from a fixed point in time (e.g. January 1, 1970 00:00:00 GMT). The value MUST NOT include leading zeros (e.g. <samp>000273154346</samp>).  </dd>
+    <dt>nonce</dt>
+    <dd style="margin-left: 6"><br/> REQUIRED. A unique string generated by the client. The value MUST be unique across all requests with the same timestamp and MAC key identifier combination.  </dd>
+    <dt>ext</dt>
+    <dd style="margin-left: 6"><br/> OPTIONAL. A string used to include additional information which is covered by the request MAC. The content and format of the string is beyond the scope of this specification.  </dd>
+    <dt>mac</dt>
+    <dd style="margin-left: 6"><br/> REQUIRED. The HTTP request MAC as described in <a href="#mac">Section 3.2</a>.  </dd>
+</dl>
+
+<p> </p>
+<p id="rfc.section.3.1.p.4">Attributes MUST NOT appear more than once. Attribute values are limited to a subset of ASCII, which does not require escaping, as defined by the plain-string ABNF.  </p>
+<h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#mac" id="mac">Request MAC</a></h1>
+<p id="rfc.section.3.2.p.1">The client uses the MAC algorithm and the MAC key to calculate the request MAC. This specification defines two algorithms: <samp>hmac-sha-1</samp> and <samp>hmac-sha-256</samp>, and provides an extension registry for additional algorithms.  </p>
+<h1 id="rfc.section.3.2.1"><a href="#rfc.section.3.2.1">3.2.1.</a> <a href="#base_string" id="base_string">Normalized Request String</a></h1>
+<p id="rfc.section.3.2.1.p.1">The normalized request string is a consistent, reproducible concatenation of several of the HTTP request elements into a single string. By normalizing the request into a reproducible string, the client and server can both calculate the request MAC over the exact same value.  </p>
+<p id="rfc.section.3.2.1.p.2">The string is constructed by concatenating together, in order, the following HTTP request elements, each followed by a new line character (%x0A): </p>
+<p/>
+
+<ol>
+    <li>The timestamp value calculated for the request.  </li>
+    <li>The nonce value generated for the request.  </li>
+    <li>The HTTP request method in upper case. For example: <samp>HEAD</samp>, <samp>GET</samp>, <samp>POST</samp>, etc.  </li>
+    <li>The HTTP request-URI as defined by <a href="#RFC2616">[RFC2616]</a> section 5.1.2.  </li>
+    <li>The hostname included in the HTTP request using the <samp>Host</samp> request header field in lower case.  </li>
+    <li>The port as included in the HTTP request using the <samp>Host</samp> request header field. If the header field does not include a port, the default value for the scheme MUST be used (e.g. 80 for HTTP and 443 for HTTPS).  </li>
+    <li>The value of the <samp>ext</samp> <samp>Authorization</samp> request header field attribute if one was included in the request, otherwise, an empty string.  </li>
+</ol>
+
+<p> </p>
+<p id="rfc.section.3.2.1.p.4">Each element is followed by a new line character (%x0A) including the last element and even when an element value is an empty string.  </p>
+<p>For example, the HTTP request: </p>
+<pre>
+
+  POST /request?b5=%3D%253D&amp;a3=a&amp;c%40=&amp;a2=r%20b&amp;c2&amp;a3=2+q HTTP/1.1
+  Host: example.com
+
+  Hello World!
+
+            </pre>
+<p>using timestamp <samp>264095:7d8f3e4a</samp>, nonce <samp>7d8f3e4a</samp>, and extension string <samp>a,b,c</samp> is normalized into the following string (the new line separator character is represented by <samp>\n</samp> for display purposes only): </p>
+<pre>
+
+  264095\n
+  7d8f3e4a\n
+  POST\n
+  /request?b5=%3D%253D&amp;a3=a&amp;c%40=&amp;a2=r%20b&amp;c2&amp;a3=2+q\n
+  example.com\n
+  80\n
+  a,b,c\n
+
+            </pre>
+<h1 id="rfc.section.3.2.2"><a href="#rfc.section.3.2.2">3.2.2.</a> hmac-sha-1</h1>
+<p><samp>hmac-sha-1</samp> uses the HMAC-SHA1 algorithm as defined in <a href="#RFC2104">[RFC2104]</a>: </p>
+<pre>
+
+  mac = HMAC-SHA1 (key, text)
+
+            </pre>
+<p id="rfc.section.3.2.2.p.2">Where: </p>
+<p/>
+
+<dl>
+    <dt>text</dt>
+    <dd style="margin-left: 6"><br/> is set to the value of the normalized request string as described in <a href="#base_string">Section 3.2.1</a>, </dd>
+    <dt>key</dt>
+    <dd style="margin-left: 6"><br/> is set to the MAC key provided by the server, and </dd>
+    <dt>mac</dt>
+    <dd style="margin-left: 6"><br/> is used to set the value of the <samp>mac</samp> attribute, after the result octet string is base64-encoded per <a href="#RFC2045">[RFC2045]</a> section 6.8.  </dd>
+</dl>
+
+<p> </p>
+<h1 id="rfc.section.3.2.3"><a href="#rfc.section.3.2.3">3.2.3.</a> hmac-sha-256</h1>
+<p><samp>hmac-sha-256</samp> uses the HMAC algorithm as defined in <a href="#RFC2104">[RFC2104]</a> together with the SHA-256 hash function defined in <a href="#NIST-FIPS-180-3">[NIST-FIPS-180-3]</a>: </p>
+<pre>
+
+  mac = HMAC-SHA256 (key, text)
+
+            </pre>
+<p id="rfc.section.3.2.3.p.2">Where: </p>
+<p/>
+
+<dl>
+    <dt>text</dt>
+    <dd style="margin-left: 6"><br/> is set to the value of the normalize request string as described in <a href="#base_string">Section 3.2.1</a>, </dd>
+    <dt>key</dt>
+    <dd style="margin-left: 6"><br/> is set to the MAC key provided by the server, and </dd>
+    <dt>mac</dt>
+    <dd style="margin-left: 6"><br/> is used to set the value of the <samp>mac</samp> attribute, after the result octet string is base64-encoded per <a href="#RFC2045">[RFC2045]</a> section 6.8.  </dd>
+</dl>
+
+<p> </p>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> Verifying Requests</h1>
+<p id="rfc.section.4.p.1">A server receiving an authenticated request validates it by performing the following REQUIRED steps: </p>
+<p/>
+
+<ol>
+    <li>Recalculate the request MAC as described in <a href="#mac">Section 3.2</a> and compare the request MAC to the value received from the client via the <samp>mac</samp> attribute.  </li>
+    <li>Ensure that the combination of timestamp, nonce, and MAC key identifier received from the client has not been received before in a previous request. The server MAY reject requests with stale timestamps as described in <a href="#ts">Section 4.1</a>.  </li>
+    <li>Verify the scope and validity of the MAC credentials.  </li>
+</ol>
+
+<p> </p>
+<p id="rfc.section.4.p.3">If the request fails verification, the server SHOULD respond using the 401 (Unauthorized) HTTP status code and include the <samp>WWW-Authenticate</samp> response header field as described in <a href="#authn-header">Section 4.2</a>.  </p>
+<h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> <a href="#ts" id="ts">Timestamp Verification</a></h1>
+<p id="rfc.section.4.1.p.1">The timestamp, nonce, and MAC key identifier combination provide a unique identifier which enables the server to prevent replay attacks. Without replay protection, an attacker can use a compromised (but otherwise valid and authenticated) request more than once, gaining long term access to a protected resource.  </p>
+<p id="rfc.section.4.1.p.2">Including a timestamp with the nonce removes the need to retain an infinite number of nonce values for future checks, by enabling the server to restrict the time period after which a request with an old timestamp is rejected. If such a restriction is enforced, the server MUST: </p>
+<p/>
+
+<ul>
+    <li>At the time the first request is received from the client for each MAC key identifier, calculate the difference (in seconds) between the request timestamp and the server's clock. The difference - the request time delta - MUST be kept as long as the MAC key credentials are valid.  </li>
+    <li>For each subsequent client request, apply the request time delta to request timestamp to calculate the adjusted request time - the time when the request MAC has been generated by the client, adjusted to the server's clock.  </li>
+    <li>Verify that the adjusted request time is within the allowed time period defined by the server. The server SHOULD allow for a sufficiently large window to accommodate network delays (between the time the request has been generated by the client to the time it is received by the server and processed).  </li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> <a href="#authn-header" id="authn-header">The "WWW-Authenticate" Response Header Field</a></h1>
+<p id="rfc.section.4.2.p.1">If the protected resource request does not include authentication credentials, contains an invalid MAC key identifier, or is malformed, the server SHOULD include the HTTP <samp>WWW-Authenticate</samp> response header field.  </p>
+<p>For example: </p>
+<pre>
+
+  HTTP/1.1 401 Unauthorized
+  WWW-Authenticate: MAC
+
+          </pre>
+<p id="rfc.section.4.2.p.2">The <samp>WWW-Authenticate</samp> request header field uses the framework defined by <a href="#RFC2617">[RFC2617]</a> as follows: </p>
+<pre>
+
+  challenge   = "MAC" [ 1*SP #param ]
+  param       = error / auth-param
+  error       = "error" "=" ( token / quoted-string)
+
+          </pre>
+<p id="rfc.section.4.2.p.3">Each attribute MUST NOT appear more than once.  </p>
+<p id="rfc.section.4.2.p.4">If the protected resource request included a MAC <samp>Authorization</samp> request header field and failed authentication, the server MAY include the <samp>error</samp> attribute to provide the client with a human-readable explanation why the access request was declined to assist the client developer in identifying the problem.  </p>
+<p>For example: </p>
+<pre>
+
+  HTTP/1.1 401 Unauthorized
+  WWW-Authenticate: MAC error="The MAC credentials expired"
+
+          </pre>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#oauth2" id="oauth2">Use with OAuth 2.0</a></h1>
+<p id="rfc.section.5.p.1">OAuth 2.0 (<a href="#RFC6749">[RFC6749]</a>) defines an extensible token-based authentication framework. The MAC authentication scheme can be used to make OAuth-based requests by issuing MAC-type access tokens.  </p>
+<p id="rfc.section.5.p.2">This specification does not define methods for the client to specifically request a MAC-type token from the authorization server. Additionally, it does not include any discovery facilities for identifying which HMAC algorithms are supported by a resource server, or how the client may go about obtaining MAC access tokens for any given protected resource.  </p>
+<h1 id="rfc.section.5.1"><a href="#rfc.section.5.1">5.1.</a> Issuing MAC-Type Access Tokens</h1>
+<p id="rfc.section.5.1.p.1">Authorization servers issuing MAC-type access tokens MUST include the following parameters whenever a response includes the <samp>access_token</samp> parameter: </p>
+<p/>
+
+<dl>
+    <dt>access_token</dt>
+    <dd style="margin-left: 6"><br/> REQUIRED. The MAC key identifier.  </dd>
+    <dt>mac_key</dt>
+    <dd style="margin-left: 6"><br/> REQUIRED. The MAC key.  </dd>
+    <dt>mac_algorithm</dt>
+    <dd style="margin-left: 6"><br/> REQUIRED. The MAC algorithm used to calculate the request MAC. Value MUST be one of <samp>hmac-sha-1</samp>, <samp>hmac-sha-256</samp>, or a registered extension algorithm name as described in <a href="#registry">Section 7.1</a>.  </dd>
+</dl>
+
+<p> </p>
+<p>For example: </p>
+<pre>
+
+  HTTP/1.1 200 OK
+  Content-Type: application/json
+  Cache-Control: no-store
+
+  {
+    "access_token":"SlAV32hkKG",
+    "token_type":"mac",
+    "expires_in":3600,
+    "refresh_token":"8xLOxBtZp8",
+    "mac_key":"adijq39jdlaska9asud",
+    "mac_algorithm":"hmac-sha-256"
+  }
+
+          </pre>
+<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#Security" id="Security">Security Considerations</a></h1>
+<p id="rfc.section.6.p.1">As stated in <a href="#RFC2617">[RFC2617]</a>, the greatest sources of risks are usually found not in the core protocol itself but in policies and procedures surrounding its use.  Implementers are strongly encouraged to assess how this protocol addresses their security requirements.  </p>
+<h1 id="rfc.section.6.1"><a href="#rfc.section.6.1">6.1.</a> MAC Keys Transmission</h1>
+<p id="rfc.section.6.1.p.1">This specification describes two mechanism for obtaining or transmitting MAC keys, both require the use of a transport-layer security mechanism when sending MAC keys to the client. Additional methods used to obtain MAC credentials must ensure that these transmissions are protected using transport-layer mechanisms such as TLS or SSL.  </p>
+<h1 id="rfc.section.6.2"><a href="#rfc.section.6.2">6.2.</a> Confidentiality of Requests</h1>
+<p id="rfc.section.6.2.p.1">While this protocol provides a mechanism for verifying the integrity of requests, it provides no guarantee of request confidentiality. Unless further precautions are taken, eavesdroppers will have full access to request content. Servers should carefully consider the kinds of data likely to be sent as part of such requests, and should employ transport-layer security mechanisms to protect sensitive resources.  </p>
+<h1 id="rfc.section.6.3"><a href="#rfc.section.6.3">6.3.</a> Spoofing by Counterfeit Servers</h1>
+<p id="rfc.section.6.3.p.1">This protocol makes no attempt to verify the authenticity of the server. A hostile party could take advantage of this by intercepting the client's requests and returning misleading or otherwise incorrect responses. Service providers should consider such attacks when developing services using this protocol, and should require transport-layer security for any requests where the authenticity of the resource server or of request responses is an issue.  </p>
+<h1 id="rfc.section.6.4"><a href="#rfc.section.6.4">6.4.</a> Plaintext Storage of Credentials</h1>
+<p id="rfc.section.6.4.p.1">The MAC key functions the same way passwords do in traditional authentication systems. In order to compute the request MAC, the server must have access to the MAC key in plaintext form. This is in contrast, for example, to modern operating systems, which store only a one-way hash of user credentials.  </p>
+<p id="rfc.section.6.4.p.2">If an attacker were to gain access to these MAC keys - or worse, to the server's database of all such MAC keys - he or she would be able to perform any action on behalf of any resource owner. Accordingly, it is critical that servers protect these MAC keys from unauthorized access.  </p>
+<h1 id="rfc.section.6.5"><a href="#rfc.section.6.5">6.5.</a> Entropy of MAC Keys</h1>
+<p id="rfc.section.6.5.p.1">Unless a transport-layer security protocol is used, eavesdroppers will have full access to authenticated requests and request MAC values, and will thus be able to mount offline brute-force attacks to recover the MAC key used. Servers should be careful to assign MAC keys which are long enough, and random enough, to resist such attacks for at least the length of time that the MAC credentials are valid.  </p>
+<p id="rfc.section.6.5.p.2">For example, if the MAC credentials are valid for two weeks, servers should ensure that it is not possible to mount a brute force attack that recovers the MAC key in less than two weeks. Of course, servers are urged to err on the side of caution, and use the longest MAC key reasonable.  </p>
+<p id="rfc.section.6.5.p.3">It is equally important that the pseudo-random number generator (PRNG) used to generate these MAC keys be of sufficiently high quality. Many PRNG implementations generate number sequences that may appear to be random, but which nevertheless exhibit patterns or other weaknesses which make cryptanalysis or brute force attacks easier. Implementers should be careful to use cryptographically secure PRNGs to avoid these problems.  </p>
+<h1 id="rfc.section.6.6"><a href="#rfc.section.6.6">6.6.</a> Denial of Service / Resource Exhaustion Attacks</h1>
+<p id="rfc.section.6.6.p.1">This specification includes a number of features which may make resource exhaustion attacks against servers possible. For example, this protocol requires servers to track used nonces. If an attacker is able to use many nonces quickly, the resources required to track them may exhaust available capacity. And again, this protocol can require servers to perform potentially expensive computations in order to verify the request MAC on incoming requests. An attacker may exploit this to perform a denial of service attack by sending a large number of invalid requests to the server.  </p>
+<p id="rfc.section.6.6.p.2">Resource Exhaustion attacks are by no means specific to this specification. However, implementers should be careful to consider the additional avenues of attack that this protocol exposes, and design their implementations accordingly. For example, entropy starvation typically results in either a complete denial of service while the system waits for new entropy or else in weak (easily guessable) MAC keys. When implementing this protocol, servers should consider which of these presents a more serious risk for their application and design accordingly.  </p>
+<h1 id="rfc.section.6.7"><a href="#rfc.section.6.7">6.7.</a> Timing Attacks</h1>
+<p id="rfc.section.6.7.p.1">This specification makes use of HMACs, for which a signature verification involves comparing the received MAC string to the expected one. If the string comparison operator operates in observably different times depending on inputs, e.g. because it compares the strings character by character and returns a negative result as soon as two characters fail to match, then it may be possible to use this timing information to determine the expected MAC, character by character.  </p>
+<p id="rfc.section.6.7.p.2">Service implementers are encouraged to use fixed-time string comparators for MAC verification.  </p>
+<h1 id="rfc.section.6.8"><a href="#rfc.section.6.8">6.8.</a> CSRF Attacks</h1>
+<p id="rfc.section.6.8.p.1">A Cross-Site Request Forgery attack occurs when a site, evil.com, initiates within the victim's browser the loading of a URL from or the posting of a form to a web site where a side-effect will occur, e.g. transfer of money, change of status message, etc. To prevent this kind of attack, web sites may use various techniques to determine that the originator of the request is indeed the site itself, rather than a third party. The classic approach is to include, in the set of URL parameters or form content, a nonce generated by the server and tied to the user's session, which indicates that only the server could have triggered the action.  </p>
+<p id="rfc.section.6.8.p.2">Recently, the Origin HTTP header has been proposed and deployed in some browsers. This header indicates the scheme, host, and port of the originator of a request. Some web applications may use this Origin header as a defense against CSRF.  </p>
+<p id="rfc.section.6.8.p.3">To keep this specification simple, HTTP headers are not part of the string to be MAC'ed.  As a result, MAC authentication cannot defend against header spoofing, and a web site that uses the Host header to defend against CSRF attacks cannot use MAC authentication to defend against active network attackers. Sites that want the full protection of MAC Authentication should use traditional, cookie-tied CSRF defenses.  </p>
+<h1 id="rfc.section.6.9"><a href="#rfc.section.6.9">6.9.</a> Coverage Limitations</h1>
+<p id="rfc.section.6.9.p.1">The normalized request string has been designed to support the authentication methods defined in this specification. Those designing additional methods, should evaluated the compatibility of the normalized request string with their security requirements.  Since the normalized request string does not cover the entire HTTP request, servers should employ additional mechanisms to protect such elements.  </p>
+<p id="rfc.section.6.9.p.2">The request MAC does not cover entity-header fields which can often affect how the request body is interpreted by the server (i.e. Content-Type). If the server behavior is influenced by the presence or value of such header fields, an attacker can manipulate the request header without being detected.  </p>
+<h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> <a href="#IANA" id="IANA">IANA Considerations</a></h1>
+<h1 id="rfc.section.7.1"><a href="#rfc.section.7.1">7.1.</a> <a href="#registry" id="registry">The HTTP MAC Authentication Scheme Algorithm Registry</a></h1>
+<p id="rfc.section.7.1.p.1">This specification establishes the HTTP MAC authentication scheme algorithm registry.  </p>
+<p id="rfc.section.7.1.p.2">Additional MAC algorithms are registered on the advice of one or more Designated Experts (appointed by the IESG or their delegate), with a Specification Required (using terminology from <a href="#RFC5226">[RFC5226]</a>). However, to allow for the allocation of values prior to publication, the Designated Expert(s) may approve registration once they are satisfied that such a specification will be published.  </p>
+<p id="rfc.section.7.1.p.3">Registration requests should be sent to the [TBD]@ietf.org mailing list for review and comment, with an appropriate subject (e.g., "Request for MAC Algorithm: example").  [[ Note to RFC-EDITOR: The name of the mailing list should be determined in consultation with the IESG and IANA. Suggested name: http-mac-ext-review. ]] </p>
+<p id="rfc.section.7.1.p.4">Within at most 14 days of the request, the Designated Expert(s) will either approve or deny the registration request, communicating this decision to the review list and IANA.  Denials should include an explanation and, if applicable, suggestions as to how to make the request successful.  </p>
+<p id="rfc.section.7.1.p.5">Decisions (or lack thereof) made by the Designated Expert can be first appealed to Application Area Directors (contactable using app-ads@tools.ietf.org email address or directly by looking up their email addresses on http://www.iesg.org/ website) and, if the appellant is not satisfied with the response, to the full IESG (using the iesg@iesg.org mailing list).  </p>
+<p id="rfc.section.7.1.p.6">IANA should only accept registry updates from the Designated Expert(s), and should direct all requests for registration to the review mailing list.  </p>
+<h1 id="rfc.section.7.1.1"><a href="#rfc.section.7.1.1">7.1.1.</a> Registration Template</h1>
+<p/>
+
+<dl>
+    <dt>Algorithm name:</dt>
+    <dd style="margin-left: 8"><br/> The name requested (e.g., "example").  </dd>
+    <dt>Change controller:</dt>
+    <dd style="margin-left: 8"><br/> For standards-track RFCs, state "IETF". For others, give the name of the responsible party. Other details (e.g., postal address, e-mail address, home page URI) may also be included.  </dd>
+    <dt>Specification document(s):</dt>
+    <dd style="margin-left: 8"><br/> Reference to document that specifies the algorithm, preferably including a URI that can be used to retrieve a copy of the document. An indication of the relevant sections may also be included, but is not required.  </dd>
+</dl>
+
+<p> </p>
+<h1 id="rfc.section.7.1.2"><a href="#rfc.section.7.1.2">7.1.2.</a> Initial Registry Contents</h1>
+<p id="rfc.section.7.1.2.p.1">The HTTP MAC authentication scheme algorithm registry's initial contents are: </p>
+<p/>
+
+<ul>
+    <li>Algorithm name: hmac-sha-1 </li>
+    <li>Change controller: IETF </li>
+    <li>Specification document(s): [[ this document ]] </li>
+</ul>
+
+<p> </p>
+<p/>
+
+<ul>
+    <li>Algorithm name: hmac-sha-256 </li>
+    <li>Change controller: IETF </li>
+    <li>Specification document(s): [[ this document ]] </li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.7.2"><a href="#rfc.section.7.2">7.2.</a> OAuth Access Token Type Registration</h1>
+<p id="rfc.section.7.2.p.1">This specification registers the following access token type in the OAuth Access Token Type Registry.  </p>
+<h1 id="rfc.section.7.2.1"><a href="#rfc.section.7.2.1">7.2.1.</a> The "mac" OAuth Access Token Type</h1>
+<p/>
+
+<dl>
+    <dt>Type name:</dt>
+    <dd style="margin-left: 8"><br/> mac </dd>
+    <dt>Additional Token Endpoint Response Parameters:</dt>
+    <dd style="margin-left: 8"><br/> secret, algorithm </dd>
+    <dt>HTTP Authentication Scheme(s):</dt>
+    <dd style="margin-left: 8"><br/> MAC </dd>
+    <dt>Change controller:</dt>
+    <dd style="margin-left: 8"><br/> IETF </dd>
+    <dt>Specification document(s):</dt>
+    <dd style="margin-left: 8"><br/> [[ this document ]] </dd>
+</dl>
+
+<p> </p>
+<h1 id="rfc.section.7.3"><a href="#rfc.section.7.3">7.3.</a> OAuth Parameters Registration</h1>
+<p id="rfc.section.7.3.p.1">This specification registers the following parameters in the OAuth Parameters Registry established by <a href="#RFC6749">[RFC6749]</a>.  </p>
+<h1 id="rfc.section.7.3.1"><a href="#rfc.section.7.3.1">7.3.1.</a> The "mac_key" OAuth Parameter</h1>
+<p/>
+
+<dl>
+    <dt>Parameter name:</dt>
+    <dd style="margin-left: 8">mac_key </dd>
+    <dt>Parameter usage location:</dt>
+    <dd style="margin-left: 8">authorization response, token response </dd>
+    <dt>Change controller:</dt>
+    <dd style="margin-left: 8">IETF </dd>
+    <dt>Specification document(s):</dt>
+    <dd style="margin-left: 8">[[ this document ]] </dd>
+    <dt>Related information:</dt>
+    <dd style="margin-left: 8">None </dd>
+</dl>
+
+<p> </p>
+<h1 id="rfc.section.7.3.2"><a href="#rfc.section.7.3.2">7.3.2.</a> The "mac_algorithm" OAuth Parameter</h1>
+<p/>
+
+<dl>
+    <dt>Parameter name:</dt>
+    <dd style="margin-left: 8">mac_algorithm </dd>
+    <dt>Parameter usage location:</dt>
+    <dd style="margin-left: 8">authorization response, token response </dd>
+    <dt>Change controller:</dt>
+    <dd style="margin-left: 8">IETF </dd>
+    <dt>Specification document(s):</dt>
+    <dd style="margin-left: 8">[[ this document ]] </dd>
+    <dt>Related information:</dt>
+    <dd style="margin-left: 8">None </dd>
+</dl>
+
+<p> </p>
+<h1 id="rfc.section.8"><a href="#rfc.section.8">8.</a> Contributors</h1>
+<p id="rfc.section.8.p.1">This document is based on OAuth 1.0 and we would like to thank Eran Hammer-Lahav for his work on incorporating the ideas into OAuth 2.0.</p>
+<h1 id="rfc.section.9"><a href="#rfc.section.9">9.</a> Acknowledgments</h1>
+<p id="rfc.section.9.p.1">The author would like to thank Ben Adida, Adam Barth, Phil Hunt, Rasmus Lerdorf, James Manger, William Mills, Scott Renfro, Justin Richer, Toby White, Peter Wolanin, and Skylar Woodward for their contributions, suggestions, and feedback.  </p>
+<h1 id="rfc.references"><a href="#rfc.references">10.</a> References</h1>
+<h1 id="rfc.references.1"><a href="#rfc.references.1">10.1.</a> Normative References</h1>
+<table>
+    <tbody>
+    <tr>
+        <td class="reference">
+            <b id="1">[1]</b>
+        </td>
+        <td class="top"><a href="mailto:sob@harvard.edu" title="Harvard University">Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, March 1997.</td>
+    </tr>
+    <tr>
+        <td class="reference">
+            <b id="2">[2]</b>
+        </td>
+        <td class="top"><a href="mailto:ned@innosoft.com" title="Innosoft International, Inc.">Freed, N.</a> and <a href="mailto:nsb@nsb.fv.com" title="First Virtual Holdings">N.S. Borenstein</a>, "<a href="http://tools.ietf.org/html/rfc2045">Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies</a>", RFC 2045, November 1996.</td>
+    </tr>
+    <tr>
+        <td class="reference">
+            <b id="3">[3]</b>
+        </td>
+        <td class="top"><a href="mailto:hugo@watson.ibm.com" title="IBM, T.J. Watson Research Center">Krawczyk, H.</a>, <a href="mailto:mihir@cs.ucsd.edu" title="University of California at San Diego, Dept of Computer Science and Engineering">Bellare, M.</a> and <a href="mailto:canetti@watson.ibm.com" title="IBM T.J. Watson Research Center">R. Canetti</a>, "<a href="http://tools.ietf.org/html/rfc2104">HMAC: Keyed-Hashing for Message Authentication</a>", RFC 2104, February 1997.</td>
+    </tr>
+    <tr>
+        <td class="reference">
+            <b id="4">[4]</b>
+        </td>
+        <td class="top"><a href="mailto:fielding@ics.uci.edu" title="Department of Information and Computer Science">Fielding, R.</a>, <a href="mailto:jg@w3.org" title="World Wide Web Consortium">Gettys, J.</a>, <a href="mailto:mogul@wrl.dec.com" title="Compaq Computer Corporation">Mogul, J.</a>, <a href="mailto:frystyk@w3.org" title="World Wide Web Consortium">Frystyk, H.</a>, <a href="mailto:masinter@parc.xerox.com" title="Xerox Corporation">Masinter, L.</a>, <a href="mailto:paulle@microsoft.com" title="Microsoft Corporation">Leach, P.</a> and <a href="mailto:timbl@w3.org" title="World Wide Web Consortium">T. Berners-Lee</a>, "<a href="http://tools.ietf.org/html/rfc2616">Hypertext Transfer Protocol -- HTTP/1.1</a>", RFC 2616, June 1999.</td>
+    </tr>
+    <tr>
+        <td class="reference">
+            <b id="5">[5]</b>
+        </td>
+        <td class="top"><a href="mailto:john@math.nwu.edu" title="Northwestern University, Department of Mathematics">Franks, J.</a>, <a href="mailto:pbaker@verisign.com" title="Verisign Inc.">Hallam-Baker, P.M.</a>, <a href="mailto:jeff@AbiSource.com" title="AbiSource, Inc.">Hostetler, J.L.</a>, <a href="mailto:lawrence@agranat.com" title="Agranat Systems, Inc.">Lawrence, S.D.</a>, <a href="mailto:paulle@microsoft.com" title="Microsoft Corporation">Leach, P.J.</a>, <a title="Netscape Communications Corporation">Luotonen, A.</a> and <a href="mailto:stewart@OpenMarket.com" title="Open Market, Inc.">L. Stewart</a>, "<a href="http://tools.ietf.org/html/rfc2617">HTTP Authentication: Basic and Digest Access Authentication</a>", RFC 2617, June 1999.</td>
+    </tr>
+    <tr>
+        <td class="reference">
+            <b id="6">[6]</b>
+        </td>
+        <td class="top"><a href="mailto:timbl@w3.org" title="World Wide Web Consortium">Berners-Lee, T.</a>, <a href="mailto:fielding@gbiv.com" title="Day Software">Fielding, R.</a> and <a href="mailto:LMM@acm.org" title="Adobe Systems Incorporated">L. Masinter</a>, "<a href="http://tools.ietf.org/html/rfc3986">Uniform Resource Identifier (URI): Generic Syntax</a>", STD 66, RFC 3986, January 2005.</td>
+    </tr>
+    <tr>
+        <td class="reference">
+            <b id="7">[7]</b>
+        </td>
+        <td class="top"><a>Narten, T.</a> and <a>H. Alvestrand</a>, "<a href="http://tools.ietf.org/html/rfc5226">Guidelines for Writing an IANA Considerations Section in RFCs</a>", BCP 26, RFC 5226, May 2008.</td>
+    </tr>
+    <tr>
+        <td class="reference">
+            <b id="8">[8]</b>
+        </td>
+        <td class="top"><a>Dierks, T.</a> and <a>E. Rescorla</a>, "<a href="http://tools.ietf.org/html/rfc5246">The Transport Layer Security (TLS) Protocol Version 1.2</a>", RFC 5246, August 2008.</td>
+    </tr>
+    <tr>
+        <td class="reference">
+            <b id="9">[9]</b>
+        </td>
+        <td class="top"><a>Barth, A.</a>, "<a href="http://tools.ietf.org/html/rfc6265">HTTP State Management Mechanism</a>", RFC 6265, April 2011.</td>
+    </tr>
+    <tr>
+        <td class="reference">
+            <b id="10">[10]</b>
+        </td>
+        <td class="top"><a>Fielding, R</a>, <a>Gettys, J</a>, <a>Mogul, J</a>, <a>Nielsen, H</a>, <a>Masinter, L</a>, <a>Leach, P</a>, <a>Berners-Lee, T</a>, <a>Lafon, Y</a> and <a>J Reschke</a>, "<a href="http://tools.ietf.org/html/draft-ietf-httpbis-p1-messaging-18">HTTP/1.1, part 1: URIs, Connections, and Message Parsing</a>", Internet-Draft draft-ietf-httpbis-p1-messaging-18, January 2012.</td>
+    </tr>
+    <tr>
+        <td class="reference">
+            <b id="11">[11]</b>
+        </td>
+        <td class="top"><a>Hardt, D.</a>, "<a href="http://tools.ietf.org/html/rfc6749">The OAuth 2.0 Authorization Framework</a>", RFC 6749, October 2012.</td>
+    </tr>
+    <tr>
+        <td class="reference">
+            <b id="12">[12]</b>
+        </td>
+        <td class="top"><a>Hors, A.</a>, <a>Raggett, D.</a> and <a>I. Jacobs</a>, "<a>HTML 4.01 Specification</a>", World Wide Web Consortium Recommendation REC-html401-19991224, December 1999.</td>
+    </tr>
+    <tr>
+        <td class="reference">
+            <b id="13">[13]</b>
+        </td>
+        <td class="top"><a>National Institute of Standards and Technology</a>, "<a>Secure Hash Standard (SHS). FIPS PUB 180-3, October 2008</a>", </td>
+    </tr>
+    </tbody>
+</table>
+<h1 id="rfc.references.2"><a href="#rfc.references.2">10.2.</a> Informative References</h1>
+<table>
+    <tbody>
+    <tr>
+        <td class="reference">
+            <b id="1">[1]</b>
+        </td>
+        <td class="top"><a>Tschofenig, H</a> and <a>P Hunt</a>, "<a href="http://tools.ietf.org/html/draft-tschofenig-oauth-security-00">OAuth 2.0 Security: Going Beyond Bearer Tokens</a>", Internet-Draft draft-tschofenig-oauth-security-00, September 2012.</td>
+    </tr>
+    <tr>
+        <td class="reference">
+            <b id="2">[2]</b>
+        </td>
+        <td class="top"><a>Bradley, J</a>, <a>Hunt, P</a>, <a>Nadalin, A</a> and <a>H Tschofenig</a>, "<a href="http://tools.ietf.org/html/draft-tschofenig-oauth-hotk-01">The OAuth 2.0 Authorization Framework: Holder-of-the-Key Token Usage</a>", Internet-Draft draft-tschofenig-oauth-hotk-01, July 2012.</td>
+    </tr>
+    <tr>
+        <td class="reference">
+            <b id="3">[3]</b>
+        </td>
+        <td class="top"><a>Hammer-Lahav, E.</a>, "<a href="http://tools.ietf.org/html/rfc5849">The OAuth 1.0 Protocol</a>", RFC 5849, April 2010.</td>
+    </tr>
+    </tbody>
+</table>
+<h1 id="rfc.authors">
+    <a href="#rfc.authors">Authors' Addresses</a>
+</h1>
+<div class="avoidbreak">
+    <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Justin Richer</span> (editor)
+	  <span class="n hidden">
+		<span class="family-name">Richer</span>
+	  </span>
+	</span>
+        <span class="org vcardline">The MITRE Corporation</span>
+        <span class="adr">
+
+	  <span class="vcardline">
+		<span class="locality"></span>
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+        <span class="vcardline">EMail: <a href="mailto:jricher@mitre.org">jricher@mitre.org</a></span>
+
+    </address>
+</div><div class="avoidbreak">
+    <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">William Mills</span> (editor)
+	  <span class="n hidden">
+		<span class="family-name">Mills</span>
+	  </span>
+	</span>
+        <span class="org vcardline">Yahoo! Inc.</span>
+        <span class="adr">
+
+	  <span class="vcardline">
+		<span class="locality"></span>
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+        <span class="vcardline">EMail: <a href="mailto:wmills@yahoo-inc.com ">wmills@yahoo-inc.com </a></span>
+
+    </address>
+</div><div class="avoidbreak">
+    <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Hannes Tschofenig</span> (editor)
+	  <span class="n hidden">
+		<span class="family-name">Tschofenig</span>
+	  </span>
+	</span>
+        <span class="org vcardline">Nokia Siemens Networks</span>
+        <span class="adr">
+	  <span>Linnoitustie 6</span>
+
+	  <span class="vcardline">
+		<span class="locality">Espoo</span>,
+		<span class="region"></span>
+		<span class="code">02600</span>
+	  </span>
+	  <span class="country-name vcardline">Finland</span>
+	</span>
+        <span class="vcardline">Phone: +358 (50) 4871445</span>
+
+        <span class="vcardline">EMail: <a href="mailto:Hannes.Tschofenig@gmx.net">Hannes.Tschofenig@gmx.net</a></span>
+
+        <span class="vcardline">URI: <a href="http://www.tschofenig.priv.at">http://www.tschofenig.priv.at</a></span>
+
+    </address>
+</div>
+
+</body>
+</html>
